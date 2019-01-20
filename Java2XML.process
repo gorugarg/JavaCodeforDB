@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="www.tibco.com/plugin/java/JavaToXmlActivityInput" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="www.tibco.com/plugin/java/JavaMethodActivityOutput" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="www.tibco.com/plugin/java/JavaMethodActivityInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
+    <pd:name>Java2XML.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>61</pd:startX>
+    <pd:startY>78</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1016</pd:endX>
+    <pd:endY>78</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1527597855587</pd:targetNamespace>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>331</pd:x>
+        <pd:y>44</pd:y>
+        <pd:width>145</pd:width>
+        <pd:height>140</pd:height>
+        <pd:collapsedWidth>52</pd:collapsedWidth>
+        <pd:collapsedHeight>69</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$JDBC-Query/resultSet/Record</pd:over>
+            <pd:iterationElementSlot>abc</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Java Method</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Java Method</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Java Method">
+            <pd:type>com.tibco.plugin.java.JavaMethodActivity</pd:type>
+            <pd:resourceType>ae.activities.JavaMethodActivity</pd:resourceType>
+            <pd:x>393</pd:x>
+            <pd:y>108</pd:y>
+            <config>
+                <ConstructDeclaredClass>true</ConstructDeclaredClass>
+                <CacheConstructedClass>false</CacheConstructedClass>
+                <InvokeCleanupMethod>false</InvokeCleanupMethod>
+                <MethodInfo>
+                    <classLocation>c:/users/ggarg/workspace_cloud1/javatrialjdbc.module/src/output.jar</classLocation>
+                    <classPath>/AliasLibrary.aliaslib</classPath>
+                    <className>InsertRecordsIntoHashMap</className>
+                    <isConstructor>true</isConstructor>
+                    <methodParameter>int</methodParameter>
+                    <methodParameter>java.lang.String</methodParameter>
+                    <methodParameter>java.lang.String</methodParameter>
+                    <methodParameter>java.lang.String</methodParameter>
+                </MethodInfo>
+            </config>
+            <pd:inputBindings>
+                <ns:JavaMethodActivityInput>
+                    <MethodParameters>
+                        <Parameter1>
+                            <xsl:value-of select="$abc/Record/EMPID"/>
+                        </Parameter1>
+                        <Parameter2>
+                            <xsl:value-of select="$abc/Record/EMPNAME"/>
+                        </Parameter2>
+                        <Parameter3>
+                            <xsl:value-of select="$abc/Record/EMPDEPTID"/>
+                        </Parameter3>
+                        <Parameter4>
+                            <xsl:value-of select="$abc/Record/EMPDESIGNATION"/>
+                        </Parameter4>
+                    </MethodParameters>
+                </ns:JavaMethodActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Java To XML">
+        <pd:type>com.tibco.plugin.java.JavaToXmlActivity</pd:type>
+        <pd:resourceType>ae.activities.JavaToXmlActivity</pd:resourceType>
+        <pd:x>801</pd:x>
+        <pd:y>78</pd:y>
+        <config>
+            <Repeatable>false</Repeatable>
+            <UseJavaSchema>false</UseJavaSchema>
+            <ConstructDeclaredClass>false</ConstructDeclaredClass>
+            <CacheConstructedClass>false</CacheConstructedClass>
+            <SelectorClassName>
+                <classLocation>c:/users/ggarg/workspace_cloud1/javatrialjdbc.module/src/output.jar</classLocation>
+                <classPath>/AliasLibrary.aliaslib</classPath>
+                <className>Hashamp</className>
+            </SelectorClassName>
+        </config>
+        <pd:inputBindings>
+            <ns2:JavaToXmlActivityInput>
+                <ns2:Hashamp>
+                    <xsl:value-of select="$Java-Method-1/ns1:JavaMethodActivityOutput/MethodReturnValue"/>
+                </ns2:Hashamp>
+            </ns2:JavaToXmlActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Java-Method-1">
+        <pd:type>com.tibco.plugin.java.JavaMethodActivity</pd:type>
+        <pd:resourceType>ae.activities.JavaMethodActivity</pd:resourceType>
+        <pd:x>547</pd:x>
+        <pd:y>78</pd:y>
+        <config>
+            <ConstructDeclaredClass>false</ConstructDeclaredClass>
+            <CacheConstructedClass>false</CacheConstructedClass>
+            <InvokeCleanupMethod>false</InvokeCleanupMethod>
+            <MethodInfo>
+                <classLocation>c:/users/ggarg/workspace_cloud1/javatrialjdbc.module/src/output.jar</classLocation>
+                <classPath>/AliasLibrary.aliaslib</classPath>
+                <className>InsertRecordsIntoHashMap</className>
+                <methodName>GetRecordsFromHashmap</methodName>
+                <methodReturn>Hashamp</methodReturn>
+                <methodParameter>int</methodParameter>
+            </MethodInfo>
+        </config>
+        <pd:inputBindings>
+            <ns:JavaMethodActivityInput>
+                <MethodParameters>
+                    <Parameter1>
+                        <xsl:value-of select="5"/>
+                    </Parameter1>
+                </MethodParameters>
+            </ns:JavaMethodActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="JDBC Query">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>243</pd:x>
+        <pd:y>78</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>select * from EMPLOYEE</statement>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>EMPID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>EMPNAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>EMPDEPTID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>EMPDESIGNATION</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>EMPLOCATION</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>JDBC Query</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Java To XML</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Java-Method-1</pd:from>
+        <pd:to>Java To XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Query</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Java-Method-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
